@@ -1,27 +1,9 @@
-import { getElements } from "@src/helpers/getElements";
-
-const expandCard = (e: Event) => {
-  const target = e.currentTarget as HTMLImageElement;
-  const cardContainer = target.parentElement;
-
-  const prevImgOpen = document.querySelector(
-    ".cards__card--touched"
-  ) as HTMLImageElement;
-
-  prevImgOpen.classList.remove("cards__card--touched");
-  cardContainer?.classList.add("cards__card--touched");
-};
-
-const settingImagesToButtons = (image: Node) => {
-  const img = image as HTMLImageElement;
-  img.addEventListener("click", (e) => expandCard(e));
-};
+import { ExpandingCardsPage } from "@src/pages/ExpandingCardsPage/ExpandingCardsPage";
 
 const onInit = () => {
-  // console.log("YOUR CONFIG FILE: ", CONFIG);
-  const { images } = getElements();
-
-  images.forEach((img) => settingImagesToButtons(img));
+  const app = document.querySelector<HTMLDivElement>("#app")!;
+  const expandingCardsPage = ExpandingCardsPage();
+  app.appendChild(expandingCardsPage);
 };
 
 document.addEventListener("DOMContentLoaded", onInit);

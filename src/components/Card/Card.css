@@ -1,27 +1,4 @@
-.main-app {
-  width: 100%;
-  height: 100vh;
-}
-
-.cards {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-}
-
-.cards__list {
-  display: flex;
-  align-items: center;
-  justify-content: space-evenly;
-  flex-direction: column;
-  gap: 1rem;
-  width: 90%;
-  height: 80%;
-}
-
-.cards__card {
+.card {
   position: relative;
   width: 100%;
   height: 25%;
@@ -29,7 +6,7 @@
   transition: max-height 0.5s;
 }
 
-.cards__card-img {
+.card__img {
   position: absolute;
   width: 100%;
   height: 100%;
@@ -38,7 +15,7 @@
   cursor: pointer;
 }
 
-.cards__card-title {
+.card__title {
   position: absolute;
   z-index: 500;
   color: var(--white-color);
@@ -49,18 +26,14 @@
   font-size: 2rem;
 }
 
-.cards__card--touched {
+.card--touched {
   max-height: 30rem;
   height: 100%;
   transition: max-height 0.5s;
 }
 
 @media only screen and (min-width: 1024px) {
-  .cards__list {
-    flex-direction: row;
-  }
-
-  .cards__card {
+  .card {
     position: relative;
     height: 70rem;
     max-height: 100%;
@@ -69,7 +42,7 @@
     transition: max-width 0.5s, max-height 0s, width 0.5s;
   }
 
-  .cards__card--touched {
+  .card--touched {
     max-height: 70rem;
     max-width: 60%;
     width: 50%;
