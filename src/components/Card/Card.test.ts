@@ -71,8 +71,8 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const img = document.querySelector(".card__img");
-      const title = document.querySelector(".card__title");
+      const img = document.querySelector<HTMLImageElement>(".card__img");
+      const title = document.querySelector<HTMLHeadingElement>(".card__title");
 
       expect(img).toBeInTheDocument();
       expect(title).toBeInTheDocument();
@@ -149,12 +149,10 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const title = document.querySelector(
-        ".card__title"
-      ) as HTMLHeadingElement;
+      const title = document.querySelector<HTMLHeadingElement>(".card__title");
 
       expect(title).toBeInstanceOf(HTMLHeadingElement);
-      expect(title.tagName).toBe("H3");
+      expect(title!.tagName).toBe("H3");
     });
   });
 
@@ -306,9 +304,9 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const img = document.querySelector(".card__img") as HTMLImageElement;
+      const img = document.querySelector<HTMLImageElement>(".card__img");
 
-      expect(img.src).toContain("images/test.jpg");
+      expect(img!.src).toContain("images/test.jpg");
     });
 
     test("It should handle absolute image paths", () => {
@@ -321,9 +319,9 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const img = document.querySelector(".card__img") as HTMLImageElement;
+      const img = document.querySelector<HTMLImageElement>(".card__img");
 
-      expect(img.src).toContain("/assets/images/card.png");
+      expect(img!.src).toContain("/assets/images/card.png");
     });
 
     test("It should handle external image URLs", () => {
@@ -336,9 +334,9 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const img = document.querySelector(".card__img") as HTMLImageElement;
+      const img = document.querySelector<HTMLImageElement>(".card__img");
 
-      expect(img.src).toBe("https://example.com/image.jpg");
+      expect(img!.src).toBe("https://example.com/image.jpg");
     });
   });
 
@@ -363,7 +361,7 @@ describe("Card.ts", () => {
 
       const card1 = screen.getByText("Card 1");
       const card2 = screen.getByText("Card 2");
-      const allCards = document.querySelectorAll(".card");
+      const allCards = document.querySelectorAll<HTMLDivElement>(".card");
 
       expect(card1).toBeInTheDocument();
       expect(card2).toBeInTheDocument();
@@ -404,7 +402,7 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const title = document.querySelector(".card__title");
+      const title = document.querySelector<HTMLHeadingElement>(".card__title");
 
       expect(title).toBeInTheDocument();
       expect(title?.textContent).toBe("");
@@ -420,7 +418,7 @@ describe("Card.ts", () => {
 
       renderComponent(props);
 
-      const title = document.querySelector(".card__title");
+      const title = document.querySelector<HTMLHeadingElement>(".card__title");
 
       expect(title?.textContent).toBe("Test & Title <3>");
     });

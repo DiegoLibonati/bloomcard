@@ -34,14 +34,16 @@ describe("ExpandingCardsPage.ts", () => {
 
       expect(container).toBeInstanceOf(HTMLElement);
       expect(container.className).toBe("expanding-cards-page");
-      expect(container.querySelector(".cards")).toBeInTheDocument();
+      expect(
+        container.querySelector<HTMLElement>(".cards")
+      ).toBeInTheDocument();
     });
 
     test("It should render cards section with list", () => {
       renderComponent();
 
-      const cardsSection = document.querySelector(".cards");
-      const cardsList = document.querySelector(".cards__list");
+      const cardsSection = document.querySelector<HTMLElement>(".cards");
+      const cardsList = document.querySelector<HTMLElement>(".cards__list");
 
       expect(cardsSection).toBeInTheDocument();
       expect(cardsList).toBeInTheDocument();
@@ -50,7 +52,7 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should render article element for cards list", () => {
       renderComponent();
 
-      const cardsList = document.querySelector(".cards__list");
+      const cardsList = document.querySelector<HTMLElement>(".cards__list");
 
       expect(cardsList).toBeInstanceOf(HTMLElement);
       expect(cardsList?.tagName).toBe("ARTICLE");
@@ -61,7 +63,7 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should render all cards from images array", () => {
       renderComponent();
 
-      const cards = document.querySelectorAll(".card");
+      const cards = document.querySelectorAll<HTMLDivElement>(".card");
 
       expect(cards.length).toBe(images.length);
       expect(cards.length).toBe(4);
@@ -89,8 +91,8 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should append all cards to cards list", () => {
       renderComponent();
 
-      const cardsList = document.querySelector(".cards__list");
-      const cards = cardsList?.querySelectorAll(".card");
+      const cardsList = document.querySelector<HTMLElement>(".cards__list");
+      const cards = cardsList?.querySelectorAll<HTMLDivElement>(".card");
 
       expect(cards?.length).toBe(images.length);
     });
@@ -110,7 +112,8 @@ describe("ExpandingCardsPage.ts", () => {
       renderComponent();
 
       const cards = document.querySelectorAll<HTMLDivElement>(".card");
-      const activeCards = document.querySelectorAll(".card--touched");
+      const activeCards =
+        document.querySelectorAll<HTMLDivElement>(".card--touched");
 
       expect(activeCards.length).toBe(1);
       expect(cards[0]).toHaveClass("card--touched");
@@ -161,7 +164,8 @@ describe("ExpandingCardsPage.ts", () => {
 
       await user.click(cards[2]);
 
-      const activeCards = document.querySelectorAll(".card--touched");
+      const activeCards =
+        document.querySelectorAll<HTMLDivElement>(".card--touched");
       expect(activeCards.length).toBe(1);
     });
 
@@ -220,7 +224,8 @@ describe("ExpandingCardsPage.ts", () => {
       await user.click(cards[2]);
       expect(cards[2]).toHaveClass("card--touched");
 
-      const activeCards = document.querySelectorAll(".card--touched");
+      const activeCards =
+        document.querySelectorAll<HTMLDivElement>(".card--touched");
       expect(activeCards.length).toBe(1);
     });
   });
@@ -229,7 +234,7 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should create cards based on images array length", () => {
       renderComponent();
 
-      const cards = document.querySelectorAll(".card");
+      const cards = document.querySelectorAll<HTMLDivElement>(".card");
 
       expect(cards.length).toBe(images.length);
     });
@@ -240,7 +245,7 @@ describe("ExpandingCardsPage.ts", () => {
       const cards = document.querySelectorAll<HTMLDivElement>(".card");
 
       cards.forEach((card, index) => {
-        const title = card.querySelector(".card__title");
+        const title = card.querySelector<HTMLHeadingElement>(".card__title");
         expect(title?.textContent).toBe(images[index].title);
       });
     });
@@ -262,8 +267,8 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should nest cards inside cards list", () => {
       renderComponent();
 
-      const cardsList = document.querySelector(".cards__list");
-      const cardsInList = cardsList?.querySelectorAll(".card");
+      const cardsList = document.querySelector<HTMLElement>(".cards__list");
+      const cardsInList = cardsList?.querySelectorAll<HTMLDivElement>(".card");
 
       expect(cardsInList?.length).toBe(images.length);
     });
@@ -271,8 +276,9 @@ describe("ExpandingCardsPage.ts", () => {
     test("It should nest cards list inside cards section", () => {
       renderComponent();
 
-      const cardsSection = document.querySelector(".cards");
-      const cardsList = cardsSection?.querySelector(".cards__list");
+      const cardsSection = document.querySelector<HTMLElement>(".cards");
+      const cardsList =
+        cardsSection?.querySelector<HTMLElement>(".cards__list");
 
       expect(cardsList).toBeInTheDocument();
     });
@@ -281,9 +287,9 @@ describe("ExpandingCardsPage.ts", () => {
       const { container } = renderComponent();
 
       const main = container;
-      const section = main.querySelector(".cards");
-      const article = section?.querySelector(".cards__list");
-      const cards = article?.querySelectorAll(".card");
+      const section = main.querySelector<HTMLElement>(".cards");
+      const article = section?.querySelector<HTMLElement>(".cards__list");
+      const cards = article?.querySelectorAll<HTMLDivElement>(".card");
 
       expect(main.tagName).toBe("MAIN");
       expect(section?.tagName).toBe("SECTION");
@@ -299,10 +305,10 @@ describe("ExpandingCardsPage.ts", () => {
       const cards = document.querySelectorAll<HTMLDivElement>(".card");
 
       cards.forEach((card, index) => {
-        const img = card.querySelector(".card__img") as HTMLImageElement;
-        const title = card.querySelector(".card__title");
+        const img = card.querySelector<HTMLImageElement>(".card__img");
+        const title = card.querySelector<HTMLHeadingElement>(".card__title");
 
-        expect(img.src).toContain(images[index].src);
+        expect(img!.src).toContain(images[index].src);
         expect(title?.textContent).toBe(images[index].title);
 
         if (index === 0) {
@@ -335,7 +341,8 @@ describe("ExpandingCardsPage.ts", () => {
 
       await user.click(cards[1]);
 
-      const activeCard = document.querySelector(".card--touched");
+      const activeCard =
+        document.querySelector<HTMLDivElement>(".card--touched");
       expect(activeCard).toBe(cards[1]);
     });
 
