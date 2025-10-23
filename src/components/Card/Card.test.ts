@@ -7,10 +7,12 @@ import { CardProps } from "@src/entities/props";
 
 type RenderComponent = {
   container: HTMLDivElement;
-  props: CardProps;
+  props: { onClick: jest.Mock } & CardProps;
 };
 
-const renderComponent = (props: CardProps): RenderComponent => {
+const renderComponent = (
+  props: { onClick: jest.Mock } & CardProps
+): RenderComponent => {
   const container = Card(props);
   document.body.appendChild(container);
   return { container: container, props: props };
@@ -29,7 +31,7 @@ describe("Card.ts", () => {
 
   describe("General Tests.", () => {
     test("It should render the component structure", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test-image.jpg",
         title: "Test Card",
         isActive: false,
@@ -43,7 +45,7 @@ describe("Card.ts", () => {
     });
 
     test("It should render all required elements", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test-image.jpg",
         title: "Test Card",
         isActive: false,
@@ -60,7 +62,7 @@ describe("Card.ts", () => {
     });
 
     test("It should have correct CSS classes", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test-image.jpg",
         title: "Test Card",
         isActive: false,
@@ -77,7 +79,7 @@ describe("Card.ts", () => {
     });
 
     test("It should return HTMLDivElement", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test-image.jpg",
         title: "Test Card",
         isActive: false,
@@ -92,7 +94,7 @@ describe("Card.ts", () => {
 
   describe("Props Rendering Tests.", () => {
     test("It should display the correct title", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test-image.jpg",
         title: "My Test Title",
         isActive: false,
@@ -108,7 +110,7 @@ describe("Card.ts", () => {
     });
 
     test("It should render image with correct src", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/images/card.png",
         title: "Test",
         isActive: false,
@@ -123,7 +125,7 @@ describe("Card.ts", () => {
     });
 
     test("It should render image with correct alt text from title", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Alternative Text",
         isActive: false,
@@ -138,7 +140,7 @@ describe("Card.ts", () => {
     });
 
     test("It should render h3 element for title", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Heading Title",
         isActive: false,
@@ -158,7 +160,7 @@ describe("Card.ts", () => {
 
   describe("isActive State Tests.", () => {
     test("It should not have 'card--touched' class when isActive is false", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: false,
@@ -172,7 +174,7 @@ describe("Card.ts", () => {
     });
 
     test("It should have 'card--touched' class when isActive is true", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: true,
@@ -187,7 +189,7 @@ describe("Card.ts", () => {
     });
 
     test("It should toggle class based on isActive prop", () => {
-      const propsInactive: CardProps = {
+      const propsInactive = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: false,
@@ -199,7 +201,7 @@ describe("Card.ts", () => {
 
       document.body.innerHTML = "";
 
-      const propsActive: CardProps = {
+      const propsActive = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: true,
@@ -213,7 +215,7 @@ describe("Card.ts", () => {
 
   describe("Click Event Tests.", () => {
     test("It should call onClick handler when card is clicked", async () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: false,
@@ -228,7 +230,7 @@ describe("Card.ts", () => {
     });
 
     test("It should call onClick handler multiple times on multiple clicks", async () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: false,
@@ -245,7 +247,7 @@ describe("Card.ts", () => {
     });
 
     test("It should attach click event listener to card element", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test",
         isActive: false,
@@ -264,7 +266,7 @@ describe("Card.ts", () => {
       const firstClickHandler = jest.fn();
       const secondClickHandler = jest.fn();
 
-      const props1: CardProps = {
+      const props1 = {
         imgSrc: "/test.jpg",
         title: "First Card",
         isActive: false,
@@ -277,7 +279,7 @@ describe("Card.ts", () => {
 
       document.body.innerHTML = "";
 
-      const props2: CardProps = {
+      const props2 = {
         imgSrc: "/test.jpg",
         title: "Second Card",
         isActive: false,
@@ -295,7 +297,7 @@ describe("Card.ts", () => {
 
   describe("Different Image Sources Tests.", () => {
     test("It should handle relative image paths", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "./images/test.jpg",
         title: "Test",
         isActive: false,
@@ -310,7 +312,7 @@ describe("Card.ts", () => {
     });
 
     test("It should handle absolute image paths", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/assets/images/card.png",
         title: "Test",
         isActive: false,
@@ -325,7 +327,7 @@ describe("Card.ts", () => {
     });
 
     test("It should handle external image URLs", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "https://example.com/image.jpg",
         title: "Test",
         isActive: false,
@@ -342,14 +344,14 @@ describe("Card.ts", () => {
 
   describe("Multiple Cards Tests.", () => {
     test("It should render multiple cards independently", () => {
-      const props1: CardProps = {
+      const props1 = {
         imgSrc: "/card1.jpg",
         title: "Card 1",
         isActive: false,
         onClick: jest.fn(),
       };
 
-      const props2: CardProps = {
+      const props2 = {
         imgSrc: "/card2.jpg",
         title: "Card 2",
         isActive: true,
@@ -369,14 +371,14 @@ describe("Card.ts", () => {
     });
 
     test("It should handle different active states for multiple cards", () => {
-      const props1: CardProps = {
+      const props1 = {
         imgSrc: "/card1.jpg",
         title: "Active Card",
         isActive: true,
         onClick: jest.fn(),
       };
 
-      const props2: CardProps = {
+      const props2 = {
         imgSrc: "/card2.jpg",
         title: "Inactive Card",
         isActive: false,
@@ -393,7 +395,7 @@ describe("Card.ts", () => {
 
   describe("Edge Cases Tests.", () => {
     test("It should handle empty title", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "",
         isActive: false,
@@ -409,7 +411,7 @@ describe("Card.ts", () => {
     });
 
     test("It should handle special characters in title", () => {
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: "Test & Title <3>",
         isActive: false,
@@ -425,7 +427,7 @@ describe("Card.ts", () => {
 
     test("It should handle long titles", () => {
       const longTitle = "This is a very long title that might break the layout";
-      const props: CardProps = {
+      const props = {
         imgSrc: "/test.jpg",
         title: longTitle,
         isActive: false,
