@@ -1,20 +1,14 @@
-import { Card } from "@src/components/Card/Card";
+import type { Page } from "@/types/pages";
+import type { CardComponent } from "@/types/components";
 
-import images from "@src/constants/images";
+import { Card } from "@/components/Card/Card";
 
-import "@src/pages/ExpandingCardsPage/ExpandingCardsPage.css";
+import images from "@/constants/images";
 
-const expandCard = (e: MouseEvent) => {
-  const target = e.currentTarget as HTMLDivElement;
+import "@/pages/ExpandingCardsPage/ExpandingCardsPage.css";
 
-  const cardOpen = document.querySelector<HTMLDivElement>(".card--touched");
-
-  cardOpen!.classList.remove("card--touched");
-  target?.classList.add("card--touched");
-};
-
-export const ExpandingCardsPage = (): HTMLElement => {
-  const main = document.createElement("main");
+export const ExpandingCardsPage = (): Page => {
+  const main = document.createElement("main") as Page;
   main.className = "expanding-cards-page";
 
   main.innerHTML = `
@@ -25,16 +19,39 @@ export const ExpandingCardsPage = (): HTMLElement => {
 
   const cardList = main.querySelector<HTMLElement>(".cards__list");
 
+  const expandCard = (e: MouseEvent): void => {
+    const target = e.currentTarget as HTMLDivElement;
+
+    const cardOpen = main.querySelector<HTMLDivElement>(".card--touched");
+
+    if (cardOpen) {
+      cardOpen.classList.remove("card--touched");
+    }
+
+    target.classList.add("card--touched");
+  };
+
+  const cards: CardComponent[] = [];
+
   images.forEach((image, i) => {
     const card = Card({
       imgSrc: image.src,
       title: image.title,
       isActive: i === 0,
-      onClick: (e) => expandCard(e),
+      onClick: (e) => {
+        expandCard(e);
+      },
     });
 
+    cards.push(card);
     cardList?.append(card);
   });
+
+  main.cleanup = (): void => {
+    cards.forEach((card) => {
+      card.cleanup?.();
+    });
+  };
 
   return main;
 };

@@ -1,15 +1,16 @@
-import { CardProps } from "@src/entities/props";
+import type { CardProps } from "@/types/props";
+import type { CardComponent } from "@/types/components";
 
-import "@src/components/Card/Card.css";
+import "@/components/Card/Card.css";
 
 export const Card = ({
   imgSrc,
   title,
   isActive,
   onClick,
-}: CardProps): HTMLDivElement => {
-  const divRoot = document.createElement("div");
-  divRoot.className = `card ${isActive && "card--touched"}`;
+}: CardProps): CardComponent => {
+  const divRoot = document.createElement("div") as CardComponent;
+  divRoot.className = `card ${isActive ? "card--touched" : ""}`;
 
   divRoot.innerHTML = `
     <img
@@ -21,6 +22,10 @@ export const Card = ({
   `;
 
   divRoot.addEventListener("click", onClick);
+
+  divRoot.cleanup = (): void => {
+    divRoot.removeEventListener("click", onClick);
+  };
 
   return divRoot;
 };

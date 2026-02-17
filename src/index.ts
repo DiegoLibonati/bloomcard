@@ -1,7 +1,11 @@
-import { ExpandingCardsPage } from "@src/pages/ExpandingCardsPage/ExpandingCardsPage";
+import "@/index.css";
+import { ExpandingCardsPage } from "@/pages/ExpandingCardsPage/ExpandingCardsPage";
 
-const onInit = () => {
-  const app = document.querySelector<HTMLDivElement>("#app")!;
+const onInit = (): void => {
+  const app = document.querySelector<HTMLDivElement>("#app");
+
+  if (!app) throw new Error(`You must render a container to mount the app.`);
+
   const expandingCardsPage = ExpandingCardsPage();
   app.appendChild(expandingCardsPage);
 };

@@ -1,4 +1,4 @@
-import { Image } from "@src/entities/app";
+import type { Image } from "@/types/app";
 
 const images: Image[] = [
   {
