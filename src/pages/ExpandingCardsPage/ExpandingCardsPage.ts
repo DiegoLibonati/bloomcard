@@ -12,8 +12,8 @@ export const ExpandingCardsPage = (): Page => {
   main.className = "expanding-cards-page";
 
   main.innerHTML = `
-    <section class="cards">
-        <article class="cards__list"></article>
+    <section class="cards" aria-label="Image gallery">
+        <article class="cards__list" aria-label="Gallery cards"></article>
     </section>
   `;
 
