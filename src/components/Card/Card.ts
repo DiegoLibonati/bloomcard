@@ -3,7 +3,7 @@ import type { CardComponent } from "@/types/components";
 
 import "@/components/Card/Card.css";
 
-export const Card = ({
+const Card = ({
   imgSrc,
   title,
   isActive,
@@ -33,3 +33,5 @@ export const Card = ({
 
   return divRoot;
 };
+
+export default Card;

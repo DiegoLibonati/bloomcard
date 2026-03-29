@@ -1,13 +1,13 @@
 import type { Page } from "@/types/pages";
 import type { CardComponent } from "@/types/components";
 
-import { Card } from "@/components/Card/Card";
+import Card from "@/components/Card/Card";
 
 import images from "@/constants/images";
 
 import "@/pages/ExpandingCardsPage/ExpandingCardsPage.css";
 
-export const ExpandingCardsPage = (): Page => {
+const ExpandingCardsPage = (): Page => {
   const main = document.createElement("main") as Page;
   main.className = "expanding-cards-page";
 
@@ -55,3 +55,5 @@ export const ExpandingCardsPage = (): Page => {
 
   return main;
 };
+
+export default ExpandingCardsPage;

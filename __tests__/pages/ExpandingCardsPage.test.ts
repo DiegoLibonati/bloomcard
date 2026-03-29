@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import type { Page } from "@/types/pages";
 
-import { ExpandingCardsPage } from "@/pages/ExpandingCardsPage/ExpandingCardsPage";
+import ExpandingCardsPage from "@/pages/ExpandingCardsPage/ExpandingCardsPage";
 
 const renderPage = (): Page => {
   const container = ExpandingCardsPage();
