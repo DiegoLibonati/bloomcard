@@ -6,88 +6,93 @@ import type { CardComponent } from "@/types/components";
 
 import Card from "@/components/Card/Card";
 
-const renderComponent = (props: CardProps): CardComponent => {
-  const container = Card(props);
-  document.body.appendChild(container);
-  return container;
+const mockOnClick = jest.fn();
+
+const defaultProps: CardProps = {
+  imgSrc: "/images/test.jpg",
+  title: "Test Card",
+  isActive: false,
+  onClick: mockOnClick,
 };
 
-describe("Card Component", () => {
+const renderComponent = (props: Partial<CardProps> = {}): CardComponent => {
+  const element = Card({ ...defaultProps, ...props });
+  document.body.appendChild(element);
+  return element;
+};
+
+describe("Card", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.clearAllMocks();
   });
 
-  const mockOnClick = jest.fn();
+  describe("rendering", () => {
+    it("should render a div with role button", () => {
+      renderComponent();
+      expect(screen.getByRole("button")).toBeInTheDocument();
+    });
 
-  const defaultProps: CardProps = {
-    imgSrc: "/images/nature.jpg",
-    title: "Beautiful Nature",
-    isActive: false,
-    onClick: mockOnClick,
-  };
+    it("should have tabindex 0", () => {
+      renderComponent();
+      expect(screen.getByRole("button")).toHaveAttribute("tabindex", "0");
+    });
 
-  it("should render card with correct structure", () => {
-    renderComponent(defaultProps);
+    it("should have the correct aria-label", () => {
+      renderComponent({ title: "Mountain" });
+      expect(
+        screen.getByRole("button", { name: "Expand card: Mountain" })
+      ).toBeInTheDocument();
+    });
 
-    const card = document.querySelector<HTMLDivElement>(".card");
-    expect(card).toBeInTheDocument();
+    it("should have class card when isActive is false", () => {
+      renderComponent({ isActive: false });
+      const card = screen.getByRole("button");
+      expect(card).toHaveClass("card");
+      expect(card).not.toHaveClass("card--touched");
+    });
+
+    it("should have class card--touched when isActive is true", () => {
+      renderComponent({ isActive: true });
+      expect(screen.getByRole("button")).toHaveClass("card--touched");
+    });
+
+    it("should render an img with the correct src", () => {
+      renderComponent({ imgSrc: "/images/hero.jpg" });
+      const img = document.querySelector<HTMLImageElement>(".card__img");
+      expect(img).toHaveAttribute("src", "/images/hero.jpg");
+    });
+
+    it("should render an img with the correct alt text", () => {
+      renderComponent({ title: "Forest" });
+      const img = document.querySelector<HTMLImageElement>(".card__img");
+      expect(img).toHaveAttribute("alt", "Forest");
+    });
+
+    it("should render an h3 with the title", () => {
+      renderComponent({ title: "Ocean" });
+      expect(
+        screen.getByRole("heading", { level: 3, hidden: true })
+      ).toHaveTextContent("Ocean");
+    });
   });
 
-  it("should render image with correct attributes", () => {
-    renderComponent(defaultProps);
-
-    const image = screen.getByAltText("Beautiful Nature");
-    expect(image).toBeInTheDocument();
-    expect(image).toHaveAttribute("src", "/images/nature.jpg");
-    expect(image).toHaveClass("card__img");
+  describe("behavior", () => {
+    it("should call onClick when clicked", async () => {
+      const user = userEvent.setup();
+      renderComponent();
+      await user.click(screen.getByRole("button"));
+      expect(mockOnClick).toHaveBeenCalledTimes(1);
+    });
   });
 
-  it("should render title", () => {
-    renderComponent(defaultProps);
-
-    expect(screen.getByText("Beautiful Nature")).toBeInTheDocument();
-  });
-
-  it("should apply active class when isActive is true", () => {
-    const activeProps: CardProps = {
-      ...defaultProps,
-      isActive: true,
-    };
-
-    renderComponent(activeProps);
-
-    const card = document.querySelector<HTMLDivElement>(".card");
-    expect(card).toHaveClass("card", "card--touched");
-  });
-
-  it("should not apply active class when isActive is false", () => {
-    renderComponent(defaultProps);
-
-    const card = document.querySelector<HTMLDivElement>(".card");
-    expect(card).toHaveClass("card");
-    expect(card).not.toHaveClass("card--touched");
-  });
-
-  it("should call onClick handler when clicked", async () => {
-    const user = userEvent.setup();
-    renderComponent(defaultProps);
-
-    const card = document.querySelector<HTMLDivElement>(".card");
-    if (card) await user.click(card);
-
-    expect(mockOnClick).toHaveBeenCalledTimes(1);
-    expect(mockOnClick).toHaveBeenCalledWith(expect.any(MouseEvent));
-  });
-
-  it("should cleanup event listener", async () => {
-    const user = userEvent.setup();
-    const card = renderComponent(defaultProps);
-
-    card.cleanup?.();
-
-    const cardElement = document.querySelector<HTMLDivElement>(".card");
-    if (cardElement) await user.click(cardElement);
-
-    expect(mockOnClick).not.toHaveBeenCalled();
+  describe("cleanup", () => {
+    it("should remove the click listener after cleanup", async () => {
+      const user = userEvent.setup();
+      const card = renderComponent();
+      card.cleanup?.();
+      await user.click(screen.getByRole("button"));
+      expect(mockOnClick).not.toHaveBeenCalled();
+    });
   });
 });

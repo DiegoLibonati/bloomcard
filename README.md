@@ -1,4 +1,4 @@
-# Expanding Cards
+# Bloomcard
 
 ## Educational Purpose
 
@@ -17,7 +17,13 @@ The application will open automatically at `http://localhost:3000`
 
 ## Description
 
-I made a web page that works like a photo gallery, when you click on an image it expands and the other photos in the gallery shrink. I did this using methods that add and remove classes to the images with javascript.
+**Bloomcard** is an interactive image gallery built entirely with vanilla TypeScript — no frameworks, no runtime dependencies. It presents a collection of full-height photo cards laid out side by side in a horizontal strip. Each card displays a background image and a title label. When the user clicks on a card, it smoothly expands to take up the majority of the available space while the remaining cards shrink down to slim vertical slivers, keeping the full gallery visible at all times.
+
+The active card is tracked exclusively through CSS classes (`card--touched`) toggled by DOM event listeners, meaning there is no external state management layer — the DOM itself is the source of truth. Clicking a different card collapses the currently expanded one and expands the new selection in a single interaction. Only one card can be active at any given time.
+
+The project is structured around a factory-function component pattern: `Card` produces individual card elements with their own encapsulated click handler and a `cleanup()` method for proper listener teardown, while `BloomcardPage` composes those cards into the full gallery layout and delegates lifecycle management to each child. This architecture makes the data flow explicit and keeps every piece of UI self-contained.
+
+On the tooling side, the codebase enforces TypeScript strict mode with `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`, uses ESLint with `typescript-eslint` strict rules, formats with Prettier, and is tested with Jest 30 + jsdom + Testing Library. Pre-commit hooks (Husky + lint-staged) ensure that no unformatted or unlinted code reaches the repository.
 
 ## Technologies used
 
@@ -59,11 +65,7 @@ No production dependencies - Pure Vanilla TypeScript
 
 ## Portfolio Link
 
-[`https://www.diegolibonati.com.ar/#/project/Expanding-Cards`](https://www.diegolibonati.com.ar/#/project/Expanding-Cards)
-
-## Video
-
-https://user-images.githubusercontent.com/99032604/198900511-304ad5a3-5a79-45d9-b98c-5db4a9456b5c.mp4
+[`https://www.diegolibonati.com.ar/#/project/bloomcard`](https://www.diegolibonati.com.ar/#/project/bloomcard)
 
 ## Testing
 

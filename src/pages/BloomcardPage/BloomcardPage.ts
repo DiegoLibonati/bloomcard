@@ -5,11 +5,11 @@ import Card from "@/components/Card/Card";
 
 import images from "@/constants/images";
 
-import "@/pages/ExpandingCardsPage/ExpandingCardsPage.css";
+import "@/pages/BloomcardPage/BloomcardPage.css";
 
-const ExpandingCardsPage = (): Page => {
+const BloomcardPage = (): Page => {
   const main = document.createElement("main") as Page;
-  main.className = "expanding-cards-page";
+  main.className = "bloomcard-page";
 
   main.innerHTML = `
     <section class="cards" aria-label="Image gallery">
@@ -56,4 +56,4 @@ const ExpandingCardsPage = (): Page => {
   return main;
 };
 
-export default ExpandingCardsPage;
+export default BloomcardPage;
