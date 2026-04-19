@@ -5,6 +5,15 @@ import type { Page } from "@/types/pages";
 
 import BloomcardPage from "@/pages/BloomcardPage/BloomcardPage";
 
+jest.mock("@/constants/images", () => {
+  const mockData = jest.requireActual("@tests/__mocks__/images.mock");
+  const { mockImages } = mockData;
+  return {
+    __esModule: true,
+    default: mockImages,
+  };
+});
+
 const renderPage = (): Page => {
   const element = BloomcardPage();
   document.body.appendChild(element);
