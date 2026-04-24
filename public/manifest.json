@@ -1,7 +1,7 @@
 {
   "name": "Bloomcard",
   "short_name": "Bloomcard",
-  "description": "Bloomcard is an interactive image gallery built entirely with vanilla TypeScript — no frameworks, no runtime dependencies. It presents a collection of full-height photo cards laid out side by side in a horizontal strip. Each card displays a background image and a title label. When the user clicks on a card, it smoothly expands to take up the majority of the available space while the remaining cards shrink down to slim vertical slivers, keeping the full gallery visible at all times.",
+  "description": "Bloomcard is an interactive image gallery built entirely with vanilla TypeScript — no frameworks, no runtime dependencies.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
