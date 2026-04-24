@@ -83,6 +83,7 @@ describe("Card", () => {
       renderComponent();
       await user.click(screen.getByRole("button"));
       expect(mockOnClick).toHaveBeenCalledTimes(1);
+      expect(mockOnClick).toHaveBeenCalledWith(expect.any(MouseEvent));
     });
   });
 

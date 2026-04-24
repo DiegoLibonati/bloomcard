@@ -23,19 +23,18 @@ const renderPage = (): Page => {
 describe("BloomcardPage", () => {
   afterEach(() => {
     document.body.innerHTML = "";
+    jest.restoreAllMocks();
   });
 
   describe("rendering", () => {
     it("should render a main element", () => {
       renderPage();
-      expect(document.querySelector<HTMLElement>("main")).toBeInTheDocument();
+      expect(screen.getByRole("main")).toBeInTheDocument();
     });
 
     it("should have class bloomcard-page", () => {
       renderPage();
-      expect(document.querySelector<HTMLElement>("main")).toHaveClass(
-        "bloomcard-page"
-      );
+      expect(screen.getByRole("main")).toHaveClass("bloomcard-page");
     });
 
     it("should render a section with aria-label Image gallery", () => {
