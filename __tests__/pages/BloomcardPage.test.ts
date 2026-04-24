@@ -28,12 +28,14 @@ describe("BloomcardPage", () => {
   describe("rendering", () => {
     it("should render a main element", () => {
       renderPage();
-      expect(document.querySelector("main")).toBeInTheDocument();
+      expect(document.querySelector<HTMLElement>("main")).toBeInTheDocument();
     });
 
     it("should have class bloomcard-page", () => {
       renderPage();
-      expect(document.querySelector("main")).toHaveClass("bloomcard-page");
+      expect(document.querySelector<HTMLElement>("main")).toHaveClass(
+        "bloomcard-page"
+      );
     });
 
     it("should render a section with aria-label Image gallery", () => {
@@ -86,7 +88,9 @@ describe("BloomcardPage", () => {
       renderPage();
       const cards = screen.getAllByRole("button");
       await user.click(cards[2]!);
-      expect(document.querySelectorAll(".card--touched")).toHaveLength(1);
+      expect(
+        document.querySelectorAll<HTMLDivElement>(".card--touched")
+      ).toHaveLength(1);
     });
 
     it("should re-activate the same card when clicked while active", async () => {
